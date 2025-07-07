@@ -1,0 +1,50 @@
+# Kafka Configuration
+kafka:
+  bootstrap:
+    servers: localhost:9092
+
+# MicroProfile Messaging Configuration
+mp:
+  messaging:
+    # Outgoing channels (Producers)
+    outgoing:
+      orders-out:
+        connector: smallrye-kafka
+        topic: orders
+        key:
+          serializer: org.apache.kafka.common.serialization.StringSerializer
+        value:
+          serializer: org.apache.kafka.common.serialization.StringSerializer
+
+      notifications-out:
+        connector: smallrye-kafka
+        topic: notifications
+        key:
+          serializer: org.apache.kafka.common.serialization.StringSerializer
+        value:
+          serializer: org.apache.kafka.common.serialization.StringSerializer
+
+    # Incoming channels (Consumers)
+    incoming:
+      orders-in:
+        connector: smallrye-kafka
+        topic: orders
+        key:
+          deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value:
+          deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+      notifications-in:
+        connector: smallrye-kafka
+        topic: notifications
+        key:
+          deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value:
+          deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+# Quarkus Application Configuration
+quarkus:
+  http:
+    port: 8080
+  log:
+    level: INFO
